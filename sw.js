@@ -1,5 +1,5 @@
 
-const CACHE_STATIC_NAME  = 'static-v1';
+const CACHE_STATIC_NAME  = 'static-v3';
 const CACHE_DYNAMIC_NAME = 'dynamic-v1';
 const CACHE_INMUTABLE_NAME = 'inmutable-v1';
 
@@ -80,6 +80,14 @@ self.addEventListener('fetch', e => {
                     });
 
                 return newResp.clone();
+            })
+            .catch( err => {
+
+                if ( e.request.headers.get('accept').includes('text/html') ) {
+                    return caches.match('/pages/offline.html');
+                }
+
+                
             });
 
 
